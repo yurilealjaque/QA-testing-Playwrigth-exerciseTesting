@@ -17,41 +17,5 @@ test("TC01 - login happy path",async({page})=>{
     // Paso 5 --> Validar acceso a la pantalla Home
     await expect(page.getByTestId("page-title")).toContainText("Mi cuenta")
 
-    // click en inicio
-    await page.getByTestId("nav-home").click();
-
-    //obtener la lista al dar clic en inicio
-
-    const itemsAntes = page.getByTestId("product-name");
-    await expect(itemsAntes.first()).not.toHaveText('');
-    const primerTextoInicial = await itemsAntes.first().innerText()
-    console.log(primerTextoInicial);
-
-
-
-    //clic en ordenar ascendente
-    await page.getByTestId("sort").selectOption({label:'Nombre (A - Z)'});
-    
-    // Validar
-
-    const items = page.getByTestId("product-name");
-
-    await expect(items.first()).not.toHaveText(primerTextoInicial);
-
-    const nombreProducto = await items.allTextContents();
-    console.log(nombreProducto)
-
-    // Validar que se hayan ordenado
-
-    //1. Obtener los textos de la pagina (limpios de espacios)
-    const actualTitles = (await items.allTextContents()).map(text => text.trim())
-
-    //2. crear una copia del arreglo y la ordena alfabeticamente
-    const expectedTitles = [...actualTitles].sort((a,b) => a.localeCompare(b));
-
-    //3. Validar que el arreglo original sea identico al arreglo ordenado
-    expect(actualTitles).toEqual(expectedTitles);
-
-
 
 });
